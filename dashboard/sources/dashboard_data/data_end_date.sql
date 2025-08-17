@@ -1,0 +1,2 @@
+SELECT data_end_date
+FROM data_end_date

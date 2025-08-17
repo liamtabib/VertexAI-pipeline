@@ -1,0 +1,4 @@
+name: dashboard_data
+type: duckdb
+options:
+  filename: dashboard_data.duckdb

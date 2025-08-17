@@ -1,0 +1,39 @@
+[project]
+name = "ecommerce-analytics"
+version = "0.1.0"
+description = "BigQuery ecommerce analytics pipeline with dbt, DuckDB and Evidence.dev"
+authors = ["Analytics Team"]
+readme = "README.md"
+requires-python = "==3.12.*"
+dependencies = [
+    "dagster>=1.8.0",
+    "dagster-webserver>=1.8.0",
+    "dagster-dbt>=0.24.0",
+    "duckdb==1.2.0",
+    "google-cloud-bigquery==3.25.0",
+    "loguru>=0.7.2,<1.0.0",
+    "google-auth>=2.24.0,<3.0.0",
+    "pydantic>=2.7.4,<3.0.0",
+    "db-dtypes>=1.1.1,<2.0.0",
+    "pyarrow==17.0.0",
+    "google-cloud-bigquery-storage==2.26.0",
+    "dbt-duckdb==1.9.0",
+    "dbt-bigquery>=1.10.0",
+    "pandas>=2.0.0",
+]
+
+[tool.pytest.ini_options]
+# google warning https://github.com/googleapis/google-cloud-python/issues/11184
+filterwarnings = [
+    "ignore:Deprecated call to `pkg_resources\\.declare_namespace\\('.*'\\):DeprecationWarning",
+    "ignore::DeprecationWarning:google.rpc",
+]
+
+[tool.dagster]
+module_name = "dagster_pipeline"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.3",
+    "ruff>=0.8.1",
+]

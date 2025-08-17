@@ -1,0 +1,298 @@
+Work on the existing Evidence.dev project inside /dashboard to create new visuals with a precise layout and style (specified below). Keep the current colors theme. Treat the dataset as **daily-updating**. All monthly metrics must exclude the current, potentially partial month; the funnel must use the **latest full month**.
+
+Additionally, create a minimal dbt project to build one thin "core" layer of models from the raw BigQuery public dataset. Keep the dbt footprint small (one layer, a handful of models).
+
+
+DO NOT FORGET: At your disposal, you have the evidence.dev documentation at https://docs.evidence.dev/. Furthermore, the visuals are inspired from this site https://product.evidence.app/ who has source code documented at https://github.com/archiewood/product-demo. 
+
+
+Here are the METRICS needed for this project.
+--------------------------------
+1) Monthly Active Users (MAU)
+   - Distinct `events.user_id` per calendar month with activity.
+   - Exclude current month so charts show only full months.
+
+2) Monthly Cohort Retention
+   - Cohort = `DATE_TRUNC(DATE(users.created_at), MONTH)`.
+   - Retained if the user has >= 1 event in a later month.
+   - Age = months between activity month and cohort month.
+   - Show the 5 most recent cohorts.
+
+3) Users by Country
+   - Count of users by `users.country`.
+
+3.5) Top 5 percentage increasing and decreasing countries last 30 days (by percentage, relative to previous period)
+
+4) Users by Platform (Android / iOS / Desktop / Web)
+   - Infer platform from `events.browser`:
+     * Android: browser string contains "android"
+     * iOS: "mobile safari", "iphone", "ipad", "ios", or "crios"
+     * Desktop: common desktop browsers without "mobile"
+     * Web: everything else or generic "mobile" that isn't Android/iOS
+   - Assign each user a **dominant platform** based on their **most recent** platform observed.
+   - Return absolute counts and share.
+
+5) Shopping Funnel (5 steps) — latest full month
+   - Session-based funnel derived from `events.event_type`.
+   - Natural steps in this dataset: `home → department → product → cart → purchase`.
+   - A session qualifies for step N only if it includes all prior steps.
+
+Here is SQL code that should be used as inspiration. Observe that they can contain errors, and therefore should only be used as inspiration.
+--------------------------------------------
+
+```
+Active users
+WITH base AS (
+  SELECT DATE_TRUNC(DATE(created_at), MONTH) AS month, user_id
+  FROM `bigquery-public-data.thelook_ecommerce.events`
+  WHERE DATE_TRUNC(DATE(created_at), MONTH) < DATE_TRUNC(CURRENT_DATE(), MONTH)
+)
+SELECT month, COUNT(DISTINCT user_id) AS mau
+FROM base
+GROUP BY month
+ORDER BY month;
+```
+
+retention
+```
+WITH cohort AS (
+  SELECT id AS user_id, DATE_TRUNC(DATE(created_at), MONTH) AS cohort_month
+  FROM `bigquery-public-data.thelook_ecommerce.users`
+  WHERE DATE_TRUNC(DATE(created_at), MONTH) < DATE_TRUNC(CURRENT_DATE(), MONTH)
+),
+activity AS (
+  SELECT DISTINCT user_id, DATE_TRUNC(DATE(created_at), MONTH) AS active_month
+  FROM `bigquery-public-data.thelook_ecommerce.events`
+),
+matrix AS (
+  SELECT c.cohort_month,
+         DATE_DIFF(a.active_month, c.cohort_month, MONTH) AS age_month,
+         COUNT(DISTINCT a.user_id) AS active_users
+  FROM cohort c
+  JOIN activity a USING (user_id)
+  WHERE DATE_DIFF(a.active_month, c.cohort_month, MONTH) >= 0
+  GROUP BY c.cohort_month, age_month
+),
+sizes AS (
+  SELECT cohort_month, COUNT(*) AS cohort_size
+  FROM cohort
+  GROUP BY cohort_month
+),
+rates AS (
+  SELECT m.cohort_month, m.age_month, m.active_users, s.cohort_size,
+         SAFE_DIVIDE(m.active_users, s.cohort_size) AS retention_rate
+  FROM matrix m
+  JOIN sizes s USING (cohort_month)
+),
+ranked AS (
+  SELECT cohort_month, cohort_size,
+         DENSE_RANK() OVER (ORDER BY cohort_month DESC) AS rnk
+  FROM sizes
+)
+SELECT
+  r.cohort_month,
+  CONCAT(CAST(EXTRACT(YEAR FROM r.cohort_month) AS STRING), '-', LPAD(CAST(EXTRACT(MONTH FROM r.cohort_month) AS STRING),2,'0')) AS cohort_label,
+  rates.age_month,
+  rates.retention_rate
+FROM rates
+JOIN ranked r USING (cohort_month)
+WHERE r.rnk <= 5
+ORDER BY cohort_month, age_month;
+```
+
+users_by_country
+```
+SELECT country, COUNT(*) AS users
+FROM `bigquery-public-data.thelook_ecommerce.users`
+WHERE country IS NOT NULL
+GROUP BY country
+ORDER BY users DESC;
+```
+
+
+platform_share
+```
+WITH classified AS (
+  SELECT
+    user_id,
+    CASE
+      WHEN REGEXP_CONTAINS(LOWER(browser), r'android') THEN 'Android'
+      WHEN REGEXP_CONTAINS(LOWER(browser), r'(mobile safari|iphone|ipad|ios|crios)') THEN 'iOS'
+      WHEN REGEXP_CONTAINS(LOWER(browser), r'mobile') THEN 'Web'
+      ELSE 'Desktop'
+    END AS platform,
+    TIMESTAMP(created_at) AS ts
+  FROM `bigquery-public-data.thelook_ecommerce.events`
+),
+latest_per_user AS (
+  SELECT AS VALUE
+    (SELECT AS STRUCT user_id, platform
+     FROM UNNEST([t]) t
+     ORDER BY t.ts DESC
+     LIMIT 1)
+  FROM (
+    SELECT user_id, ARRAY_AGG(STRUCT(user_id, platform, ts)) AS arr
+    FROM classified
+    GROUP BY user_id
+  ), UNNEST(arr) t
+)
+SELECT
+  platform,
+  COUNT(*) AS users,
+  SAFE_DIVIDE(COUNT(*), SUM(COUNT(*)) OVER ()) AS share
+FROM latest_per_user
+GROUP BY platform
+ORDER BY users DESC;
+```
+
+-- /queries/funnel
+```
+DECLARE latest_full_month DATE DEFAULT DATE_SUB(DATE_TRUNC(CURRENT_DATE(), MONTH), INTERVAL 1 MONTH);
+
+WITH month_events AS (
+  SELECT session_id, event_type
+  FROM `bigquery-public-data.thelook_ecommerce.events`
+  WHERE DATE_TRUNC(DATE(created_at), MONTH) = latest_full_month
+),
+sess AS (
+  SELECT session_id, ARRAY_AGG(DISTINCT event_type) AS steps
+  FROM month_events
+  GROUP BY session_id
+),
+counts AS (
+  SELECT
+    COUNTIF('home' IN UNNEST(steps)) AS s1,
+    COUNTIF('home' IN UNNEST(steps) AND 'department' IN UNNEST(steps)) AS s2,
+    COUNTIF('home' IN UNNEST(steps) AND 'department' IN UNNEST(steps) AND 'product' IN UNNEST(steps)) AS s3,
+    COUNTIF('home' IN UNNEST(steps) AND 'department' IN UNNEST(steps) AND 'product' IN UNNEST(steps) AND 'cart' IN UNNEST(steps)) AS s4,
+    COUNTIF('home' IN UNNEST(steps) AND 'department' IN UNNEST(steps) AND 'product' IN UNNEST(steps) AND 'cart' IN UNNEST(steps) AND 'purchase' IN UNNEST(steps)) AS s5
+  FROM sess
+)
+SELECT * FROM (
+  SELECT 1           AS step, s1 AS sessions FROM counts UNION ALL
+  SELECT 2,           s2              FROM counts UNION ALL
+  SELECT 3,                  s3              FROM counts UNION ALL
+  SELECT 4,               s4              FROM counts UNION ALL
+  SELECT 5,                 s5              FROM counts
+)
+ORDER BY ord;
+```
+
+data_end_date
+```
+SELECT MAX(DATE(created_at)) AS data_end_date
+FROM `bigquery-public-data.thelook_ecommerce.events`;
+```
+
+PAGE LAYOUT & STYLE (roughly)  Keep the current colors theme.
+----------------------------------------------------------
+
+ROW 1:
+- LEFT: **MAU area chart** 
+- RIGHT: **Cohort retention multi-line**
+
+ROW 2:
+- half-WIDTH: **World choropleth map of users by country** 
+- other half: table with Top 5 percentage increasing and decreasing countries last 30 days (by percentage, relative to previous period)
+
+ROW 3:
+- LEFT: **Users by Platform** — 100% stacked **horizontal** bar show % with one decimal place; legend shows Android, iOS, Desktop, Web; bars normalized to sum to 100%.
+- RIGHT: ** Funnel** — 5 steps
+
+Global page header above the grid:
+- Small text line: “As of <data_end_date> (monthly charts exclude the current month; funnel uses latest full month)”.
+- Use default Evidence theme; apply consistent padding (24px gap) between cells.
+
+Use these Evidence components (or closest equivalents in the installed version):
+- `<Area>` for MAU
+- `<Line>` for retention (split by cohort label)
+- `<Map>` for country
+- `<Bar stack="normalize" orientation="horizontal">` for platform
+- `<Funnel>` for onboarding
+
+AXES / FORMATTING:
+- Counts: `,d` formatting.
+- Percentages: `.0%` for retention and platform share; funnel can be counts (`,d`) or percent if you precompute.
+- Tooltips enabled by default; show exact values.
+
+IMPLEMENTATION TIPS for the graphs (Note that the below is only tips and may contain errors)
+----------------------------------------------------------------
+```
+
+<Data query="data_end_date">
+As of **{data_end_date[0].data_end_date}** — monthly charts exclude the current month; funnel uses the latest full month.
+</Data>
+
+
+  <Cell span=7>
+    <Data query="mau">
+      <Area data={mau} x=month y=mau yFormat=",d" height=260 title="Monthly Active Users" />
+    </Data>
+  </Cell>
+
+  <Cell span=5>
+    <Data query="retention">
+      <Line data={retention}
+            series=retention_rate
+            x=age_month
+            y=retention_rate
+            split=cohort_label
+            yFormat=".0%"
+            height=260
+            title="Monthly Cohort Retention" />
+    </Data>
+  </Cell>
+
+  <Cell span=12>
+    <Data query="users_by_country">
+      <Map data={users_by_country}
+           country=country
+           value=users
+           title="Users by Country" height=420 />
+    </Data>
+  </Cell>
+
+  <Cell span=6>
+    <Data query="platform_share">
+      <Bar data={platform_share}
+           x=platform
+           y=share
+           yFormat=".1%"
+           stack="normalize"
+           orientation="horizontal"
+           title="Users by Platform" />
+    </Data>
+  </Cell>
+
+  <Cell span=6>
+    <Data query="funnel">
+      <Funnel data={funnel} step=step value=sessions valueFormat=",d" height=320 title="Onboarding Funnel (latest full month)" />
+    </Data>
+  </Cell>
+
+</Grid>
+```
+
+QUALITY & GUARDRAILS
+--------------------
+- Freshness: monthly visuals must exclude the current month; funnel uses latest full month.
+- Country nulls: filter `country IS NOT NULL`. Optionally add top‑N logic in Evidence if needed.
+- Retention: if a cohort has `< 50` users, feel free to hide it (can be pushed down to SQL).
+- Performance: queries are pure SELECTs with date truncation for partition pushdown.
+
+ACCEPTANCE CRITERIA
+-------------------
+2) MAU excludes current month; funnel is latest full month; retention shows 5 most recent cohorts.
+3) Platform chart is a 100% normalized horizontal bar (Android, iOS, Desktop, Web) with percentages totaling ~100%.
+4) Funnel steps are non‑increasing (each step count <= previous).
+5) Page header displays `As of <data_end_date>`.
+
+ the exact contents here.
+- README with run steps and environment details.
+
+INSTRUCTIONS TO CLAUDE
+----------------------
+- Ask clarifying questions if you deem nescessary.
+- If a given Evidence component name doesnt exist or make sense, search in the evidence.dev docs or online, as this instructions may contain errors.
+- After implementation, run a local dev server and verify that each visualization renders without errors.
+- Again, the sql code and details specified may contain errors, so be prepared to change them according to your best knowledge

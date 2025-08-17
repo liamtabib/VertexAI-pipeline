@@ -1,0 +1,30 @@
+version: 2
+
+sources:
+  - name: thelook_ecommerce
+    description: Public BigQuery ecommerce dataset
+    database: bigquery-public-data
+    tables:
+      - name: users
+        description: User registration and profile data
+        columns:
+          - name: id
+            description: Unique user identifier
+          - name: created_at
+            description: User registration timestamp
+          - name: country
+            description: User country
+            
+      - name: events
+        description: User behavior events
+        columns:
+          - name: user_id
+            description: User identifier
+          - name: session_id
+            description: Session identifier
+          - name: event_type
+            description: Type of event (home, department, product, cart, purchase)
+          - name: created_at
+            description: Event timestamp
+          - name: browser
+            description: Browser/platform information

@@ -1,0 +1,60 @@
+version: 2
+
+models:
+  - name: mau
+    description: Monthly Active Users metric excluding current month
+    columns:
+      - name: month
+        description: Calendar month
+        tests:
+          - not_null
+      - name: mau
+        description: Count of distinct active users in the month
+        tests:
+          - not_null
+
+  - name: retention
+    description: Monthly cohort retention analysis for recent cohorts
+    columns:
+      - name: cohort_month
+        description: Cohort (user registration) month
+      - name: cohort_label
+        description: Formatted cohort label (YYYY-MM)
+      - name: age_month
+        description: Months since cohort registration
+      - name: retention_rate
+        description: Retention rate as decimal (0-1)
+
+  - name: users_by_country
+    description: User count by country
+    columns:
+      - name: country
+        description: Country name
+        tests:
+          - not_null
+      - name: users
+        description: Number of users in the country
+
+  - name: platform_share
+    description: User distribution by platform
+    columns:
+      - name: platform
+        description: Platform category (Android/iOS/Desktop/Web)
+      - name: users
+        description: Number of users with this dominant platform
+      - name: share
+        description: Percentage of total users
+
+  - name: funnel
+    description: 5-step shopping funnel for latest full month
+    columns:
+      - name: step
+        description: Funnel step number (1-5)
+      - name: sessions
+        description: Number of sessions reaching this step
+
+  - name: data_end_date
+    description: Latest data availability date
+    columns:
+      - name: data_end_date
+        description: Most recent date in events table
