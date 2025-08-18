@@ -5,6 +5,6 @@
 	export let data;
 </script>
 
-<EvidenceDefaultLayout {data} logo="/new_logo.svg" githubRepo="https://github.com/liamtabib/geostreamline">
+<EvidenceDefaultLayout {data}>
 	<slot slot="content" />
 </EvidenceDefaultLayout>

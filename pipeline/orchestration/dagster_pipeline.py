@@ -113,7 +113,7 @@ class EcommerceConfig(Config):
 
 
 @dbt_assets(
-    manifest=Path(__file__).parent / "transform" / "ecommerce_metrics" / "target" / "manifest.json",
+    manifest=Path(__file__).parent.parent / "transform" / "ecommerce_metrics" / "target" / "manifest.json",
 )
 def ecommerce_dbt_assets(context: AssetExecutionContext, dbt: DbtCliResource):
     """dbt assets for transforming ecommerce data from BigQuery public dataset"""
@@ -132,7 +132,7 @@ def ecommerce_dbt_assets(context: AssetExecutionContext, dbt: DbtCliResource):
 def export_to_duckdb(context: AssetExecutionContext) -> str:
     """Export dbt models from BigQuery to DuckDB for Evidence"""
     try:
-        script_path = Path(__file__).parent / "export_to_duckdb.py"
+        script_path = Path(__file__).parent.parent / "export" / "export_to_duckdb.py"
         
         context.log.info("Running export script to DuckDB...")
         result = subprocess.run(
@@ -316,8 +316,8 @@ defs = Definitions(
     jobs=[ecommerce_pipeline_job],
     resources={
         "dbt": DbtCliResource(
-            project_dir=Path(__file__).parent / "transform" / "ecommerce_metrics",
-            profiles_dir=Path(__file__).parent / "transform" / "ecommerce_metrics",
+            project_dir=Path(__file__).parent.parent / "transform" / "ecommerce_metrics",
+            profiles_dir=Path(__file__).parent.parent / "transform" / "ecommerce_metrics",
         ),
     }
 )

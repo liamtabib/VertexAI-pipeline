@@ -3375,3 +3375,129 @@ CROSS JOIN purchase_conversion_last_30_days
 [0m21:46:50.627725 [debug] [MainThread]: Command `dbt run` succeeded at 21:46:50.627678 after 8.86 seconds
 [0m21:46:50.627945 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1045ed0d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x100ec0d90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x100ec1910>]}
 [0m21:46:50.628150 [debug] [MainThread]: Flushing usage events
+[0m19:59:29.224423 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108e36c50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108e9d8d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108ebe890>]}
+
+
+============================== 19:59:29.227335 | 5327d2f3-9a4b-4840-a460-72b28a344390 ==============================
+[0m19:59:29.227335 [info ] [MainThread]: Running with dbt=1.8.7
+[0m19:59:29.227632 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '.', 'debug': 'False', 'version_check': 'True', 'log_path': '/Users/liamtabibzadeh/Documents/hobby/SummaryAI/pipeline/transform/ecommerce_metrics/logs', 'fail_fast': 'False', 'warn_error': 'None', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'False', 'log_format': 'default', 'introspect': 'True', 'invocation_command': 'dbt run --profiles-dir . --target dev', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'target_path': 'None', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m19:59:29.229992 [error] [MainThread]: Encountered an error:
+Parsing Error
+  Env var required but not provided: 'GCP_PROJECT'
+[0m19:59:29.231679 [debug] [MainThread]: Resource report: {"command_name": "run", "command_wall_clock_time": 0.037583333, "process_user_time": 0.514306, "process_kernel_time": 0.067904, "process_mem_max_rss": "95322112", "command_success": false, "process_in_blocks": "0", "process_out_blocks": "0"}
+[0m19:59:29.231969 [debug] [MainThread]: Command `dbt run` failed at 19:59:29.231924 after 0.04 seconds
+[0m19:59:29.232155 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1089e9950>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108e34090>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10505a0d0>]}
+[0m19:59:29.232318 [debug] [MainThread]: Flushing usage events
+[0m19:59:35.158795 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1103fa7d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11047e110>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11047ef90>]}
+
+
+============================== 19:59:35.160839 | cc1aeb0b-84f0-49b8-b4dc-9390fdad34b9 ==============================
+[0m19:59:35.160839 [info ] [MainThread]: Running with dbt=1.8.7
+[0m19:59:35.161133 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '.', 'fail_fast': 'False', 'debug': 'False', 'log_path': '/Users/liamtabibzadeh/Documents/hobby/SummaryAI/pipeline/transform/ecommerce_metrics/logs', 'version_check': 'True', 'warn_error': 'None', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'False', 'log_format': 'default', 'invocation_command': 'dbt run --profiles-dir . --target dev', 'introspect': 'True', 'static_parser': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'send_anonymous_usage_stats': 'True'}
+[0m19:59:35.163293 [error] [MainThread]: Encountered an error:
+Parsing Error
+  Env var required but not provided: 'GCP_PROJECT'
+[0m19:59:35.164038 [debug] [MainThread]: Resource report: {"command_name": "run", "command_wall_clock_time": 0.03500471, "process_user_time": 0.508503, "process_kernel_time": 0.061146, "process_mem_max_rss": "96845824", "command_success": false, "process_in_blocks": "0", "process_out_blocks": "0"}
+[0m19:59:35.164290 [debug] [MainThread]: Command `dbt run` failed at 19:59:35.164247 after 0.04 seconds
+[0m19:59:35.164468 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11047da50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x11044cb90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10376ad50>]}
+[0m19:59:35.164632 [debug] [MainThread]: Flushing usage events
+[0m19:59:44.121027 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1090fabd0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109181ad0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109182e10>]}
+
+
+============================== 19:59:44.122987 | 89b33a8e-2aa9-4937-a724-7487ee6bac9d ==============================
+[0m19:59:44.122987 [info ] [MainThread]: Running with dbt=1.8.7
+[0m19:59:44.123280 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '.', 'version_check': 'True', 'warn_error': 'None', 'log_path': '/Users/liamtabibzadeh/Documents/hobby/SummaryAI/pipeline/transform/ecommerce_metrics/logs', 'debug': 'False', 'fail_fast': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'False', 'quiet': 'False', 'no_print': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'log_format': 'default', 'introspect': 'True', 'target_path': 'None', 'invocation_command': 'dbt run --profiles-dir . --target dev', 'send_anonymous_usage_stats': 'True'}
+[0m19:59:44.125712 [error] [MainThread]: Encountered an error:
+Parsing Error
+  Env var required but not provided: 'GOOGLE_APPLICATION_CREDENTIALS'
+[0m19:59:44.126443 [debug] [MainThread]: Resource report: {"command_name": "run", "command_wall_clock_time": 0.03568404, "process_user_time": 0.515897, "process_kernel_time": 0.062013, "process_mem_max_rss": "97009664", "command_success": false, "process_in_blocks": "0", "process_out_blocks": "0"}
+[0m19:59:44.126694 [debug] [MainThread]: Command `dbt run` failed at 19:59:44.126652 after 0.04 seconds
+[0m19:59:44.126870 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1090f80d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10919d310>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109161010>]}
+[0m19:59:44.127029 [debug] [MainThread]: Flushing usage events
+[0m19:59:50.392944 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1072b6b10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1072e2050>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1072e2990>]}
+
+
+============================== 19:59:50.394777 | a6d4abd9-9e59-45a4-922f-29c05c42e943 ==============================
+[0m19:59:50.394777 [info ] [MainThread]: Running with dbt=1.8.7
+[0m19:59:50.395064 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'profiles_dir': '.', 'log_path': '/Users/liamtabibzadeh/Documents/hobby/SummaryAI/pipeline/transform/ecommerce_metrics/logs', 'debug': 'False', 'fail_fast': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'False', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'static_parser': 'True', 'invocation_command': 'dbt run --profiles-dir . --target dev --select mau', 'target_path': 'None', 'log_format': 'default', 'send_anonymous_usage_stats': 'True'}
+[0m19:59:51.576224 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'a6d4abd9-9e59-45a4-922f-29c05c42e943', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x13f7ff250>]}
+[0m19:59:51.602880 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'a6d4abd9-9e59-45a4-922f-29c05c42e943', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1057390d0>]}
+[0m19:59:51.603196 [info ] [MainThread]: Registered adapter: bigquery=1.8.2
+[0m19:59:51.613517 [debug] [MainThread]: checksum: b72588a61004764de5b9a5a46159da2d5d1870e817a9a65ee379ab1be9083c25, vars: {}, profile: , target: dev, version: 1.8.7
+[0m19:59:51.669773 [info ] [MainThread]: Unable to do partial parsing because config vars, config profile, or config target have changed
+[0m19:59:51.670068 [debug] [MainThread]: previous checksum: b72588a61004764de5b9a5a46159da2d5d1870e817a9a65ee379ab1be9083c25, current checksum: 4af21dafb485259c48497ac86b711ddb1982f3d0f1c0ca4e09356de488b753c0
+[0m19:59:51.670227 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': 'a6d4abd9-9e59-45a4-922f-29c05c42e943', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1064efa50>]}
+[0m19:59:52.147334 [warn ] [MainThread]: [[33mWARNING[0m]: Deprecated functionality
+The `tests` config has been renamed to `data_tests`. Please see
+https://docs.getdbt.com/docs/build/data-tests#new-data_tests-syntax for more
+information.
+[0m19:59:52.147636 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'deprecation', 'label': 'a6d4abd9-9e59-45a4-922f-29c05c42e943', 'property_': 'warn', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x107178d90>]}
+[0m19:59:52.282400 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'a6d4abd9-9e59-45a4-922f-29c05c42e943', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1482101d0>]}
+[0m19:59:52.330204 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': 'a6d4abd9-9e59-45a4-922f-29c05c42e943', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x14899be50>]}
+[0m19:59:52.330458 [info ] [MainThread]: Found 10 models, 3 data tests, 2 sources, 479 macros
+[0m19:59:52.330618 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'a6d4abd9-9e59-45a4-922f-29c05c42e943', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x148918890>]}
+[0m19:59:52.331172 [info ] [MainThread]: 
+[0m19:59:52.331397 [debug] [MainThread]: Acquiring new bigquery connection 'master'
+[0m19:59:52.331759 [debug] [ThreadPool]: Acquiring new bigquery connection 'list_pipeline-466508'
+[0m19:59:52.331946 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m19:59:52.753753 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_pipeline-466508, now list_pipeline-466508_ecommerce_analytics)
+[0m19:59:52.754466 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m19:59:53.204645 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'a6d4abd9-9e59-45a4-922f-29c05c42e943', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1483eb4d0>]}
+[0m19:59:53.205540 [info ] [MainThread]: Concurrency: 1 threads (target='dev')
+[0m19:59:53.205958 [info ] [MainThread]: 
+[0m19:59:53.210061 [debug] [Thread-1 (]: Began running node model.ecommerce_metrics.mau
+[0m19:59:53.210569 [info ] [Thread-1 (]: 1 of 1 START sql table model ecommerce_analytics.mau ........................... [RUN]
+[0m19:59:53.211017 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_pipeline-466508_ecommerce_analytics, now model.ecommerce_metrics.mau)
+[0m19:59:53.211347 [debug] [Thread-1 (]: Began compiling node model.ecommerce_metrics.mau
+[0m19:59:53.219509 [debug] [Thread-1 (]: Writing injected SQL for node "model.ecommerce_metrics.mau"
+[0m19:59:53.221825 [debug] [Thread-1 (]: Began executing node model.ecommerce_metrics.mau
+[0m19:59:53.231559 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m19:59:53.698038 [debug] [Thread-1 (]: Writing runtime sql for node "model.ecommerce_metrics.mau"
+[0m19:59:53.699550 [debug] [Thread-1 (]: On model.ecommerce_metrics.mau: /* {"app": "dbt", "dbt_version": "1.8.7", "profile_name": "ecommerce_metrics", "target_name": "dev", "node_id": "model.ecommerce_metrics.mau"} */
+
+  
+    
+
+    create or replace table `pipeline-466508`.`ecommerce_analytics`.`mau`
+      
+    
+    
+
+    OPTIONS()
+    as (
+      -- Monthly Active Users (MAU)
+-- Excludes current month to show only complete months
+
+WITH base AS (
+  SELECT 
+    DATE_TRUNC(DATE(created_at), MONTH) AS month, 
+    user_id
+  FROM `bigquery-public-data`.`thelook_ecommerce`.`events`
+  WHERE DATE_TRUNC(DATE(created_at), MONTH) < DATE_TRUNC(CURRENT_DATE(), MONTH)
+)
+
+SELECT 
+  month, 
+  COUNT(DISTINCT user_id) AS mau
+FROM base
+GROUP BY month
+ORDER BY month
+    );
+  
+[0m19:59:54.298939 [debug] [Thread-1 (]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=pipeline-466508&j=bq:US:15bad5ec-3944-40aa-b1c7-58f89048ff3c&page=queryresults
+[0m19:59:56.985606 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': 'a6d4abd9-9e59-45a4-922f-29c05c42e943', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x148943350>]}
+[0m19:59:56.986024 [info ] [Thread-1 (]: 1 of 1 OK created sql table model ecommerce_analytics.mau ...................... [[32mCREATE TABLE (79.0 rows, 28.6 MiB processed)[0m in 3.77s]
+[0m19:59:56.986350 [debug] [Thread-1 (]: Finished running node model.ecommerce_metrics.mau
+[0m19:59:56.986981 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m19:59:56.987140 [debug] [MainThread]: Connection 'model.ecommerce_metrics.mau' was properly closed.
+[0m19:59:56.987299 [info ] [MainThread]: 
+[0m19:59:56.987456 [info ] [MainThread]: Finished running 1 table model in 0 hours 0 minutes and 4.66 seconds (4.66s).
+[0m19:59:56.987764 [debug] [MainThread]: Command end result
+[0m19:59:57.003481 [info ] [MainThread]: 
+[0m19:59:57.003740 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m19:59:57.003889 [info ] [MainThread]: 
+[0m19:59:57.004038 [info ] [MainThread]: Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+[0m19:59:57.004272 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": true, "command_wall_clock_time": 6.6413984, "process_user_time": 3.461288, "process_kernel_time": 0.674356, "process_mem_max_rss": "248840192", "process_in_blocks": "0", "process_out_blocks": "0"}
+[0m19:59:57.004513 [debug] [MainThread]: Command `dbt run` succeeded at 19:59:57.004477 after 6.64 seconds
+[0m19:59:57.004690 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x107258090>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1072b73d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10377e310>]}
+[0m19:59:57.004855 [debug] [MainThread]: Flushing usage events

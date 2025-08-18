@@ -46,7 +46,7 @@ def main():
     # Configuration
     project_id = os.getenv('GCP_PROJECT')
     dataset_id = 'ecommerce_analytics'
-    duckdb_path = Path(__file__).parent / 'dashboard' / 'sources' / 'dashboard_data' / 'dashboard_data.duckdb'
+    duckdb_path = Path(__file__).parent.parent.parent / 'dashboard' / 'sources' / 'dashboard_data' / 'dashboard_data.duckdb'
     
     # Tables to export (matching our dbt models)
     tables = [
