@@ -2,6 +2,10 @@
 title: Product Dashboard
 ---
 
+```sql latest_summary
+SELECT * FROM latest_summary ORDER BY run_ts DESC LIMIT 1
+```
+
 ```sql data_end_date
 SELECT * FROM data_end_date
 ```
@@ -50,6 +54,14 @@ ORDER BY step
 ```sql kpi_data
 SELECT * FROM kpi_metrics
 ```
+
+{#if latest_summary.length > 0}
+<div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+  <h3 class="text-lg font-medium text-blue-900 mb-2">AI Summary</h3>
+  <p class="text-blue-800">{latest_summary[0].text}</p>
+  <p class="text-xs text-blue-600 mt-2">Generated: {latest_summary[0].run_ts}</p>
+</div>
+{/if}
 
 <div class="grid grid-cols-3 gap-4 mb-8">
 

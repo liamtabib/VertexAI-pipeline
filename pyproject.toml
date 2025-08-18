@@ -20,6 +20,10 @@ dependencies = [
     "dbt-duckdb==1.9.0",
     "dbt-bigquery>=1.10.0",
     "pandas>=2.0.0",
+    "google-cloud-aiplatform>=1.68.0",
+    "slack_sdk>=3.32.0",
+    "sendgrid>=6.11.0",
+    "requests>=2.32.0",
 ]
 
 [tool.pytest.ini_options]

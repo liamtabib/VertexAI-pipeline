@@ -1,0 +1,1 @@
+SELECT * FROM summaries ORDER BY run_ts DESC LIMIT 1;
