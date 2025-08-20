@@ -3501,3 +3501,124 @@ ORDER BY month
 [0m19:59:57.004513 [debug] [MainThread]: Command `dbt run` succeeded at 19:59:57.004477 after 6.64 seconds
 [0m19:59:57.004690 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x107258090>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1072b73d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10377e310>]}
 [0m19:59:57.004855 [debug] [MainThread]: Flushing usage events
+[0m22:18:25.106603 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104947890>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104998210>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104998250>]}
+
+
+============================== 22:18:25.109455 | a9544086-a6e5-4338-b351-5e07f5aaf7ea ==============================
+[0m22:18:25.109455 [info ] [MainThread]: Running with dbt=1.8.7
+[0m22:18:25.109740 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'fail_fast': 'False', 'profiles_dir': '.', 'log_path': '/Users/liamtabibzadeh/Documents/hobby/SummaryAI/pipeline/transform/ecommerce_metrics/logs', 'debug': 'False', 'version_check': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'empty': 'None', 'log_format': 'default', 'invocation_command': 'dbt debug --profiles-dir .', 'static_parser': 'True', 'introspect': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'send_anonymous_usage_stats': 'True'}
+[0m22:18:25.119443 [info ] [MainThread]: dbt version: 1.8.7
+[0m22:18:25.119635 [info ] [MainThread]: python version: 3.11.5
+[0m22:18:25.119784 [info ] [MainThread]: python path: /Users/liamtabibzadeh/anaconda3/bin/python
+[0m22:18:25.119915 [info ] [MainThread]: os info: macOS-14.6.1-arm64-arm-64bit
+[0m22:18:25.122479 [error] [MainThread]: Encountered an error:
+Parsing Error
+  Env var required but not provided: 'GCP_PROJECT'
+[0m22:18:25.124062 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_wall_clock_time": 0.048000876, "process_user_time": 0.508166, "process_kernel_time": 0.068514, "process_mem_max_rss": "96288768", "command_success": false, "process_in_blocks": "0", "process_out_blocks": "0"}
+[0m22:18:25.124299 [debug] [MainThread]: Command `dbt debug` failed at 22:18:25.124260 after 0.05 seconds
+[0m22:18:25.124458 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104957b50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x100ec1d90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10493bdd0>]}
+[0m22:18:25.124610 [debug] [MainThread]: Flushing usage events
+[0m22:18:31.790471 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108ee6c50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108f6da10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108f6e2d0>]}
+
+
+============================== 22:18:31.792374 | 46e92349-e02e-4a48-b5cf-f900a01b9003 ==============================
+[0m22:18:31.792374 [info ] [MainThread]: Running with dbt=1.8.7
+[0m22:18:31.792653 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'debug': 'False', 'log_path': '/Users/liamtabibzadeh/Documents/hobby/SummaryAI/pipeline/transform/ecommerce_metrics/logs', 'fail_fast': 'False', 'profiles_dir': '.', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'None', 'quiet': 'False', 'no_print': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'introspect': 'True', 'log_format': 'default', 'target_path': 'None', 'invocation_command': 'dbt debug --profiles-dir .', 'send_anonymous_usage_stats': 'True'}
+[0m22:18:31.795960 [info ] [MainThread]: dbt version: 1.8.7
+[0m22:18:31.796145 [info ] [MainThread]: python version: 3.11.5
+[0m22:18:31.796292 [info ] [MainThread]: python path: /Users/liamtabibzadeh/anaconda3/bin/python
+[0m22:18:31.796417 [info ] [MainThread]: os info: macOS-14.6.1-arm64-arm-64bit
+[0m22:18:31.798965 [error] [MainThread]: Encountered an error:
+Parsing Error
+  Env var required but not provided: 'GOOGLE_APPLICATION_CREDENTIALS'
+[0m22:18:31.799688 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_wall_clock_time": 0.038156208, "process_user_time": 0.506872, "process_kernel_time": 0.060743, "process_mem_max_rss": "96714752", "command_success": false, "process_in_blocks": "0", "process_out_blocks": "0"}
+[0m22:18:31.799934 [debug] [MainThread]: Command `dbt debug` failed at 22:18:31.799895 after 0.04 seconds
+[0m22:18:31.800105 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108f6d450>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x108f6d590>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x105462910>]}
+[0m22:18:31.800260 [debug] [MainThread]: Flushing usage events
+[0m22:18:37.784021 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104b37750>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104b35c50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104bb6090>]}
+
+
+============================== 22:18:37.785964 | 52203a65-3150-43d2-bc83-97c75e10fb17 ==============================
+[0m22:18:37.785964 [info ] [MainThread]: Running with dbt=1.8.7
+[0m22:18:37.786254 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'version_check': 'True', 'debug': 'False', 'log_path': '/Users/liamtabibzadeh/Documents/hobby/SummaryAI/pipeline/transform/ecommerce_metrics/logs', 'fail_fast': 'False', 'profiles_dir': '.', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'None', 'quiet': 'False', 'no_print': 'None', 'log_format': 'default', 'static_parser': 'True', 'introspect': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'target_path': 'None', 'invocation_command': 'dbt parse --profiles-dir .', 'send_anonymous_usage_stats': 'True'}
+[0m22:18:37.788520 [error] [MainThread]: Encountered an error:
+Parsing Error
+  Env var required but not provided: 'GCP_PROJECT'
+[0m22:18:37.789236 [debug] [MainThread]: Resource report: {"command_name": "parse", "command_wall_clock_time": 0.034896623, "process_user_time": 0.504891, "process_kernel_time": 0.059654, "process_mem_max_rss": "95633408", "command_success": false, "process_in_blocks": "0", "process_out_blocks": "0"}
+[0m22:18:37.789474 [debug] [MainThread]: Command `dbt parse` failed at 22:18:37.789433 after 0.04 seconds
+[0m22:18:37.789648 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104bb5290>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104b34790>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104b2bf90>]}
+[0m22:18:37.789809 [debug] [MainThread]: Flushing usage events
+[0m22:19:27.396330 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111afac50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111b566d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111af9c50>]}
+
+
+============================== 22:19:27.398306 | 3960ed9c-0910-4f8c-b766-458660fe9ff7 ==============================
+[0m22:19:27.398306 [info ] [MainThread]: Running with dbt=1.8.7
+[0m22:19:27.398592 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '.', 'debug': 'False', 'fail_fast': 'False', 'log_path': '/Users/liamtabibzadeh/Documents/hobby/SummaryAI/pipeline/transform/ecommerce_metrics/logs', 'warn_error': 'None', 'version_check': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'None', 'quiet': 'False', 'no_print': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'invocation_command': 'dbt debug --profiles-dir .', 'introspect': 'True', 'static_parser': 'True', 'target_path': 'None', 'log_format': 'default', 'send_anonymous_usage_stats': 'True'}
+[0m22:19:27.402038 [info ] [MainThread]: dbt version: 1.8.7
+[0m22:19:27.402239 [info ] [MainThread]: python version: 3.11.5
+[0m22:19:27.402396 [info ] [MainThread]: python path: /Users/liamtabibzadeh/anaconda3/bin/python
+[0m22:19:27.402535 [info ] [MainThread]: os info: macOS-14.6.1-arm64-arm-64bit
+[0m22:19:27.404834 [error] [MainThread]: Encountered an error:
+Parsing Error
+  Env var required but not provided: 'GCP_PROJECT'
+[0m22:19:27.405516 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_wall_clock_time": 0.038928416, "process_user_time": 0.508683, "process_kernel_time": 0.065605, "process_mem_max_rss": "95830016", "command_success": false, "process_in_blocks": "0", "process_out_blocks": "0"}
+[0m22:19:27.405738 [debug] [MainThread]: Command `dbt debug` failed at 22:19:27.405700 after 0.04 seconds
+[0m22:19:27.405892 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111b7d6d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111b7e350>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x111b7e250>]}
+[0m22:19:27.406048 [debug] [MainThread]: Flushing usage events
+[0m22:19:33.818944 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104d77f90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104dc8510>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104d75c50>]}
+
+
+============================== 22:19:33.820801 | f19edf1b-8ded-4a41-9c60-1faefede4318 ==============================
+[0m22:19:33.820801 [info ] [MainThread]: Running with dbt=1.8.7
+[0m22:19:33.821090 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'fail_fast': 'False', 'version_check': 'True', 'log_path': '/Users/liamtabibzadeh/Documents/hobby/SummaryAI/pipeline/transform/ecommerce_metrics/logs', 'profiles_dir': '.', 'debug': 'False', 'use_colors': 'True', 'use_experimental_parser': 'False', 'empty': 'None', 'quiet': 'False', 'no_print': 'None', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'log_format': 'default', 'invocation_command': 'dbt debug --profiles-dir .', 'target_path': 'None', 'introspect': 'True', 'send_anonymous_usage_stats': 'True'}
+[0m22:19:33.824475 [info ] [MainThread]: dbt version: 1.8.7
+[0m22:19:33.824696 [info ] [MainThread]: python version: 3.11.5
+[0m22:19:33.824857 [info ] [MainThread]: python path: /Users/liamtabibzadeh/anaconda3/bin/python
+[0m22:19:33.824997 [info ] [MainThread]: os info: macOS-14.6.1-arm64-arm-64bit
+[0m22:19:34.902285 [info ] [MainThread]: Using profiles dir at .
+[0m22:19:34.902558 [info ] [MainThread]: Using profiles.yml file at ./profiles.yml
+[0m22:19:34.902711 [info ] [MainThread]: Using dbt_project.yml file at /Users/liamtabibzadeh/Documents/hobby/SummaryAI/pipeline/transform/ecommerce_metrics/dbt_project.yml
+[0m22:19:34.902843 [info ] [MainThread]: adapter type: bigquery
+[0m22:19:34.902964 [info ] [MainThread]: adapter version: 1.8.2
+[0m22:19:34.941199 [info ] [MainThread]: Configuration:
+[0m22:19:34.941440 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m22:19:34.941573 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m22:19:34.941695 [info ] [MainThread]: Required dependencies:
+[0m22:19:34.941853 [debug] [MainThread]: Executing "git --help"
+[0m22:19:34.954067 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]\n           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n           [--super-prefix=<path>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone     Clone a repository into a new directory\n   init      Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add       Add file contents to the index\n   mv        Move or rename a file, a directory, or a symlink\n   restore   Restore working tree files\n   rm        Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect    Use binary search to find the commit that introduced a bug\n   diff      Show changes between commits, commit and working tree, etc\n   grep      Print lines matching a pattern\n   log       Show commit logs\n   show      Show various types of objects\n   status    Show the working tree status\n\ngrow, mark and tweak your common history\n   branch    List, create, or delete branches\n   commit    Record changes to the repository\n   merge     Join two or more development histories together\n   rebase    Reapply commits on top of another base tip\n   reset     Reset current HEAD to the specified state\n   switch    Switch branches\n   tag       Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch     Download objects and refs from another repository\n   pull      Fetch from and integrate with another repository or a local branch\n   push      Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m22:19:34.954530 [debug] [MainThread]: STDERR: "b''"
+[0m22:19:34.954703 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m22:19:34.954880 [info ] [MainThread]: Connection:
+[0m22:19:34.955048 [info ] [MainThread]:   method: service-account
+[0m22:19:34.955169 [info ] [MainThread]:   database: pipeline-466508
+[0m22:19:34.955287 [info ] [MainThread]:   execution_project: pipeline-466508
+[0m22:19:34.955398 [info ] [MainThread]:   schema: ecommerce_analytics
+[0m22:19:34.955504 [info ] [MainThread]:   location: US
+[0m22:19:34.955610 [info ] [MainThread]:   priority: None
+[0m22:19:34.955716 [info ] [MainThread]:   maximum_bytes_billed: None
+[0m22:19:34.955821 [info ] [MainThread]:   impersonate_service_account: None
+[0m22:19:34.955927 [info ] [MainThread]:   job_retry_deadline_seconds: None
+[0m22:19:34.956034 [info ] [MainThread]:   job_retries: 1
+[0m22:19:34.956137 [info ] [MainThread]:   job_creation_timeout_seconds: None
+[0m22:19:34.956242 [info ] [MainThread]:   job_execution_timeout_seconds: 300
+[0m22:19:34.956346 [info ] [MainThread]:   timeout_seconds: 300
+[0m22:19:34.956450 [info ] [MainThread]:   client_id: None
+[0m22:19:34.956555 [info ] [MainThread]:   token_uri: None
+[0m22:19:34.956660 [info ] [MainThread]:   dataproc_region: None
+[0m22:19:34.956767 [info ] [MainThread]:   dataproc_cluster_name: None
+[0m22:19:34.956870 [info ] [MainThread]:   gcs_bucket: None
+[0m22:19:34.956971 [info ] [MainThread]:   dataproc_batch: None
+[0m22:19:34.957228 [info ] [MainThread]: Registered adapter: bigquery=1.8.2
+[0m22:19:34.960486 [debug] [MainThread]: Acquiring new bigquery connection 'debug'
+[0m22:19:34.961038 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m22:19:34.997680 [debug] [MainThread]: On debug: select 1 as id
+[0m22:19:35.911631 [debug] [MainThread]: BigQuery adapter: https://console.cloud.google.com/bigquery?project=pipeline-466508&j=bq:US:ff9a9c15-3154-47bd-82d5-af78d1098a82&page=queryresults
+[0m22:19:36.472800 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m22:19:36.473457 [info ] [MainThread]: [32mAll checks passed![0m
+[0m22:19:36.474222 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": true, "command_wall_clock_time": 2.6844018, "process_user_time": 2.700323, "process_kernel_time": 0.459615, "process_mem_max_rss": "230735872", "process_in_blocks": "0", "process_out_blocks": "0"}
+[0m22:19:36.474904 [debug] [MainThread]: Command `dbt debug` succeeded at 22:19:36.474798 after 2.69 seconds
+[0m22:19:36.475322 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m22:19:36.475753 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x104a29950>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10129a1d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x12f183d50>]}
+[0m22:19:36.476217 [debug] [MainThread]: Flushing usage events

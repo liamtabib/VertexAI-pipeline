@@ -5,7 +5,6 @@ Test the corrected new user registration funnel query
 
 import os
 from google.cloud import bigquery
-import pandas as pd
 
 def test_original_query():
     """Test the original query logic"""

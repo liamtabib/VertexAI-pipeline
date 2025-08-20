@@ -4,7 +4,6 @@ Comprehensive test script for Evidence.dev dashboard module
 """
 
 import duckdb
-import pandas as pd
 from pathlib import Path
 
 def test_data_quality():

@@ -2,7 +2,7 @@ import os, json, re, time, signal, sys, logging
 from datetime import date
 from google.cloud import bigquery
 import vertexai
-from vertexai.generative_models import GenerativeModel, Part, GenerationConfig
+from vertexai.generative_models import GenerativeModel, GenerationConfig
 from slack_sdk import WebClient
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 # Global flag for graceful shutdown
 shutdown_requested = False
 
-def signal_handler(signum, frame):
+def signal_handler(signum, _):
     """Handle shutdown signals gracefully"""
     global shutdown_requested
     logger.info(f"Received signal {signum}, initiating graceful shutdown...")
@@ -135,6 +135,24 @@ def extract_facts(text):
     try: return json.loads(m.group(1)) if m else {}
     except: return {}
 
+def clean_summary_text(text):
+    """Remove any JSON blocks or facts_json sections from summary text and fix formatting"""
+    # Remove facts_json section
+    text = re.sub(r"facts_json.*", "", text, flags=re.S | re.I)
+    # Remove any remaining JSON code blocks
+    text = re.sub(r"```json.*?```", "", text, flags=re.S | re.I)
+    text = re.sub(r"```.*?```", "", text, flags=re.S)
+    
+    # Fix paragraph formatting - convert literal \n\n to actual line breaks
+    text = text.replace("\\n\\n", "\n\n")
+    text = text.replace("\\n", "\n")
+    
+    # Clean up extra whitespace and ensure proper paragraph spacing
+    text = re.sub(r"\n\s*\n", "\n\n", text)
+    text = re.sub(r"\n{3,}", "\n\n", text)  # No more than 2 consecutive newlines
+    
+    return text.strip()
+
 def merge_summary(run_id, data_end_date, text, facts):
     bq = bigquery.Client(project=PROJECT)
     bq.query(
@@ -193,21 +211,25 @@ def main():
         payload = fetch_payload()
         
         # Generate AI summary
-        text = call_gemini(payload)
+        raw_text = call_gemini(payload)
         
-        # Extract structured facts
-        facts = extract_facts(text)
+        # Extract structured facts before cleaning
+        facts = extract_facts(raw_text)
         logger.info(f"Extracted facts: {facts}")
+        
+        # Clean the text for display (remove JSON)
+        clean_text = clean_summary_text(raw_text)
+        logger.info(f"Cleaned summary: {clean_text}")
         
         # Store summary in BigQuery
         logger.info("Storing summary in BigQuery...")
-        merge_summary(RUN_ID, payload["data_end_date"], text, facts)
+        merge_summary(RUN_ID, payload["data_end_date"], clean_text, facts)
         logger.info("✅ Summary stored successfully")
         
         # Send notifications (optional)
         if SLACK_TOKEN and SLACK_CH:
             logger.info("Sending Slack notification...")
-            slack_ts = send_slack(text)
+            slack_ts = send_slack(clean_text)
             logger.info(f"✅ Slack notification sent: {slack_ts}")
         else:
             slack_ts = None
@@ -215,7 +237,7 @@ def main():
         
         if EMAIL_KEY and EMAIL_TO:
             logger.info("Sending email notification...")
-            email_id = send_email(text, f"Ecommerce Summary — As of {payload['data_end_date']}")
+            email_id = send_email(clean_text, f"Ecommerce Summary — As of {payload['data_end_date']}")
             logger.info(f"✅ Email notification sent: {email_id}")
         else:
             email_id = None

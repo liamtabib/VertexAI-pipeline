@@ -7,7 +7,6 @@ import os
 import duckdb
 from google.cloud import bigquery
 from loguru import logger
-import pandas as pd
 from pathlib import Path
 
 
@@ -48,7 +47,7 @@ def main():
     dataset_id = 'ecommerce_analytics'
     duckdb_path = Path(__file__).parent.parent.parent / 'dashboard' / 'sources' / 'dashboard_data' / 'dashboard_data.duckdb'
     
-    # Tables to export (matching our dbt models)
+    # Tables to export (matching our dbt models + summaries)
     tables = [
         'mau',
         'retention', 
@@ -57,7 +56,8 @@ def main():
         'funnel',
         'data_end_date',
         'country_trends',
-        'kpi_metrics'
+        'kpi_metrics',
+        'summaries'
     ]
     
     if not project_id:

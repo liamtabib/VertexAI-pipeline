@@ -8,35 +8,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-def run_command(cmd, description, cwd=None):
-    """Run a command and print results"""
-    print(f"\n{'='*60}")
-    print(f"TESTING: {description}")
-    print(f"Command: {' '.join(cmd)}")
-    print(f"{'='*60}")
-    
-    try:
-        result = subprocess.run(
-            cmd, 
-            cwd=cwd, 
-            capture_output=True, 
-            text=True, 
-            check=True,
-            timeout=120
-        )
-        print("✅ SUCCESS")
-        if result.stdout:
-            print("Output:", result.stdout[:500])
-        return True
-    except subprocess.CalledProcessError as e:
-        print("❌ FAILED")
-        print(f"Exit code: {e.returncode}")
-        print(f"stdout: {e.stdout[:500]}")
-        print(f"stderr: {e.stderr[:500]}")
-        return False
-    except subprocess.TimeoutExpired:
-        print("⏱️ TIMEOUT (this might be expected for long-running services)")
-        return True
 
 def main():
     """Test the complete pipeline"""

@@ -2,6 +2,19 @@
 title: Product Dashboard
 ---
 
+<style>
+.summary-content p {
+  margin-bottom: 1rem;
+}
+.summary-content p:last-child {
+  margin-bottom: 0;
+}
+.summary-content {
+  white-space: pre-line;
+  line-height: 1.6;
+}
+</style>
+
 ```sql latest_summary
 SELECT * FROM latest_summary ORDER BY run_ts DESC LIMIT 1
 ```
@@ -55,13 +68,6 @@ ORDER BY step
 SELECT * FROM kpi_metrics
 ```
 
-{#if latest_summary.length > 0}
-<div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-  <h3 class="text-lg font-medium text-blue-900 mb-2">AI Summary</h3>
-  <p class="text-blue-800">{latest_summary[0].text}</p>
-  <p class="text-xs text-blue-600 mt-2">Generated: {latest_summary[0].run_ts}</p>
-</div>
-{/if}
 
 <div class="grid grid-cols-3 gap-4 mb-8">
 
@@ -81,20 +87,15 @@ SELECT * FROM kpi_metrics
 <BigValue 
     data={kpi_data} 
     value=purchase_conversion_rate
-    title="Purchase Conversion (30d)"
+    title="Purchase Conversion last 30 days"
     fmt='#,##0.0%'
 />
 
 </div>
 
-<p class="text-sm text-gray-600 mb-6">
-As of <strong>{data_end_date[0].data_end_date}</strong> — monthly charts exclude the current month; funnel uses the latest full month.
-</p>
-
-## Monthly Activity & Retention
 
 <Grid cols=2 gapSize="lg">
-  <AreaChart 
+  <BarChart 
     data={mau_data} 
     x=month 
     y=mau 
@@ -128,7 +129,6 @@ As of <strong>{data_end_date[0].data_end_date}</strong> — monthly charts exclu
   />
 </Grid>
 
-## Geographic Distribution & Trends
 
 <AreaMap 
   data={country_data}
@@ -142,7 +142,6 @@ As of <strong>{data_end_date[0].data_end_date}</strong> — monthly charts exclu
   legend=false
 />
 
-## Country Growth Trends
 
 <Grid cols=2 gapSize="lg">
   <DataTable 
@@ -164,7 +163,6 @@ As of <strong>{data_end_date[0].data_end_date}</strong> — monthly charts exclu
   </DataTable>
 </Grid>
 
-## Platform Analysis & Conversion Funnel
 
 <Grid cols=2 gapSize="lg">
   <BarChart 
@@ -188,8 +186,12 @@ As of <strong>{data_end_date[0].data_end_date}</strong> — monthly charts exclu
 
 
 
-## Build Your Own Insights.
-This dashboard is powered by [Google Cloud](https://cloud.google.com/), [Vertex AI](https://cloud.google.com/vertex-ai), and [Evidence](https://evidence.dev/). You can find the code for this dashboard on [GitHub](https://github.com/mehd-io/pypi-duck-flow).
+{#if latest_summary.length > 0}
+<div class="bg-blue-30 border border-blue-220 rounded-lg p-2 mb-3">
+  <h3 class="text-lg font-medium text-blue-90 mb-2">Dashboard AI Highlights</h3>
+  <div class="text-blue-800 summary-content">{@html latest_summary[0].text}</div>
+ 
+</div>
+{/if}
 
-
-*Made with ❤️ by 🧢 [Liam](https://www.linkedin.com/in/liamtabibzadeh/)*
+This dashboard is powered by [Google Cloud](https://cloud.google.com/), [Vertex AI](https://cloud.google.com/vertex-ai), and [Evidence](https://evidence.dev/). You can find the code for this dashboard on [GitHub](https://github.com/mehd-io/pypi-duck-flow). *Made by [Liam](https://www.linkedin.com/in/liamtabibzadeh/)*.

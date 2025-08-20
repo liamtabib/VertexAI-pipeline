@@ -6,7 +6,6 @@ import time
 from dagster import (
     asset, 
     AssetExecutionContext,
-    Config,
     Definitions,
     define_asset_job
 )
@@ -89,27 +88,6 @@ def sync_summary_to_duckdb(project, dataset, duckdb_path, run_id=None):
         raise Exception(f"Failed to sync summary to DuckDB: {e}")
 
 
-def health_check_cloud_run_job(project, region, job_name):
-    """Health check for Cloud Run Job deployment"""
-    try:
-        import subprocess
-        result = subprocess.run([
-            "gcloud", "run", "jobs", "describe", job_name,
-            f"--region={region}",
-            "--format=value(status.conditions[0].status)"
-        ], capture_output=True, text=True, timeout=30)
-        
-        if result.returncode == 0:
-            status = result.stdout.strip()
-            return status == "True"
-        return False
-    except Exception:
-        return False
-
-
-class EcommerceConfig(Config):
-    gcp_project: str = os.getenv("GCP_PROJECT", "your-project-id")
-    bq_dataset: str = "ecommerce_analytics"
 
 
 @dbt_assets(
