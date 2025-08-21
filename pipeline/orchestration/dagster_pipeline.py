@@ -32,7 +32,8 @@ def trigger_cloud_run_job(project, region, job_name, run_id=None):
     url = f"https://run.googleapis.com/v1/projects/{project}/locations/{region}/jobs/{job_name}:run"
     body = {}
     if run_id:
-        body = {"overrides":{"containerOverrides":[{"name":"container-0","env":[{"name":"RUN_ID","value":run_id}]}]}}
+        # Override the first (unnamed) container's environment
+        body = {"overrides":{"containerOverrides":[{"env":[{"name":"RUN_ID","value":run_id}]}]}}
     
     max_retries = 3
     for attempt in range(max_retries):
