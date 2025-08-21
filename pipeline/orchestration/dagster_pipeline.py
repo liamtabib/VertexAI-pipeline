@@ -126,7 +126,7 @@ def export_to_duckdb(context: AssetExecutionContext) -> str:
         if result.stderr:
             context.log.warning(f"Export script warnings: {result.stderr}")
         
-        duckdb_path = Path(__file__).parent / "dashboard" / "sources" / "dashboard_data" / "dashboard_data.duckdb"
+        duckdb_path = Path(__file__).parent.parent.parent / "dashboard" / "sources" / "dashboard_data" / "dashboard_data.duckdb"
         context.log.info(f"Data exported to DuckDB at {duckdb_path}")
         
         return str(duckdb_path)
@@ -149,7 +149,7 @@ def export_to_duckdb(context: AssetExecutionContext) -> str:
 def evidence_dashboard(context: AssetExecutionContext, export_to_duckdb: str) -> str:
     """Build Evidence dashboard with fresh data"""
     try:
-        dashboard_dir = Path(__file__).parent / "dashboard"
+        dashboard_dir = Path(__file__).parent.parent.parent / "dashboard"
         
         context.log.info("Building Evidence dashboard...")
         result = subprocess.run(
@@ -267,7 +267,7 @@ def sync_summary(context: AssetExecutionContext, gemini_summary: str) -> str:
     try:
         project = os.getenv("GCP_PROJECT")
         dataset = "ecommerce_analytics"
-        duckdb_path = Path(__file__).parent / "dashboard" / "sources" / "dashboard_data" / "dashboard_data.duckdb"
+        duckdb_path = Path(__file__).parent.parent.parent / "dashboard" / "sources" / "dashboard_data" / "dashboard_data.duckdb"
         
         context.log.info(f"Syncing summary with run_id: {gemini_summary} to DuckDB")
         sync_summary_to_duckdb(project, dataset, str(duckdb_path), gemini_summary)
