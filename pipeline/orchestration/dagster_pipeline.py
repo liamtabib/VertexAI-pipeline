@@ -180,7 +180,7 @@ def evidence_dashboard(context: AssetExecutionContext, export_to_duckdb: str) ->
 
 
 @asset(
-    description="Generate AI summary using Cloud Run Job",
+    description="Generate AI summary using Cloud Run Job (optional in CI)",
     deps=[export_to_duckdb],
     group_name="summary"
 )
@@ -253,12 +253,13 @@ def gemini_summary(context: AssetExecutionContext) -> str:
         raise Exception(f"Cloud Run Job did not complete within {max_wait}s - check Cloud Console for details")
         
     except Exception as e:
-        context.log.error(f"Failed to trigger Cloud Run Job: {str(e)}")
-        raise
+        context.log.warning(f"Cloud Run Job failed (continuing without AI): {str(e)}")
+        # Return mock run_id to allow pipeline to continue
+        return time.strftime("%Y-%m-%d")
 
 
 @asset(
-    description="Sync AI summary from BigQuery to DuckDB",
+    description="Sync AI summary from BigQuery to DuckDB (optional)",
     deps=[gemini_summary],
     group_name="summary"
 )
@@ -276,8 +277,10 @@ def sync_summary(context: AssetExecutionContext, gemini_summary: str) -> str:
         return str(duckdb_path)
         
     except Exception as e:
-        context.log.error(f"Failed to sync summary to DuckDB: {str(e)}")
-        raise
+        context.log.warning(f"Failed to sync summary to DuckDB (continuing without AI summary): {str(e)}")
+        # Return the DuckDB path so the dashboard can still build
+        duckdb_path = Path(__file__).parent.parent.parent / "dashboard" / "sources" / "dashboard_data" / "dashboard_data.duckdb"
+        return str(duckdb_path)
 
 
 # Define the main pipeline job

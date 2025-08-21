@@ -50,6 +50,11 @@ jobs:
           cd pipeline/transform/ecommerce_metrics
           uv run dbt compile
           
+      - name: Install Evidence dependencies
+        run: |
+          cd dashboard
+          npm ci
+          
       - name: Prepare environment for CI
         run: |
           # Remove .env file to prevent local overrides of CI environment variables
