@@ -50,6 +50,14 @@ jobs:
           cd pipeline/transform/ecommerce_metrics
           uv run dbt compile
           
+      - name: Prepare environment for CI
+        run: |
+          # Remove .env file to prevent local overrides of CI environment variables
+          if [ -f .env ]; then
+            mv .env .env.local.backup
+            echo "Moved .env to .env.local.backup to prevent conflicts with CI environment"
+          fi
+          
       - name: Run Dagster pipeline
         env:
           GCP_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
