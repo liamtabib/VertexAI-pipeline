@@ -1,0 +1,109 @@
+name: VertexAI Ecommerce Analytics Pipeline
+
+permissions:
+  id-token: write
+  contents: write
+
+on:
+  workflow_dispatch:
+    inputs:
+      debug_mode:
+        description: 'Enable debug logging'
+        required: false
+        default: false
+        type: boolean
+  schedule:
+    - cron: '0 6 * * 1'  # Weekly on Mondays at 6 AM UTC
+
+jobs:
+  run-analytics-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+          
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        
+      - name: Install dependencies
+        run: |
+          uv sync --all-extras
+          uv add dagster-webserver loguru
+          
+      - id: 'auth'
+        name: 'Authenticate to GCP'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          credentials_json: '${{ secrets.GCP_SECRETS }}'
+
+      - name: Generate dbt manifest
+        env:
+          GCP_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
+        run: |
+          cd pipeline/transform/ecommerce_metrics
+          uv run dbt compile
+          
+      - name: Run Dagster pipeline
+        env:
+          GCP_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          VERTEX_LOCATION: ${{ secrets.VERTEX_LOCATION }}
+          VERTEX_MODEL: ${{ secrets.VERTEX_MODEL }}
+          BQ_DATASET: ecommerce_analytics
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
+          DAGSTER_HOME: ${{ github.workspace }}/.dagster
+        run: |
+          mkdir -p .dagster
+          uv run dagster job execute -f pipeline/orchestration/dagster_pipeline.py -j ecommerce_analytics_pipeline
+          
+      - name: Commit updated dashboard data
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          if git diff --exit-code dashboard/sources/dashboard_data/dashboard_data.duckdb > /dev/null; then
+            echo "No changes to dashboard data, skipping commit"
+          else
+            echo "Dashboard data updated, committing changes"
+            git add dashboard/sources/dashboard_data/dashboard_data.duckdb
+            git commit -m "chore: update dashboard data - automated pipeline run ${{ github.run_id }}"
+            git push origin main
+            echo "Dashboard data committed and pushed successfully"
+          fi
+          
+      - name: Upload pipeline logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dagster-logs-${{ github.run_id }}
+          path: .dagster/logs/
+          retention-days: 7
+          
+      - name: Notify on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue_body = `## 🚨 VertexAI Analytics Pipeline Failed
+            **Run:** ${{ github.run_id }}
+            **Commit:** ${{ github.sha }}
+            **Triggered by:** ${{ github.event_name }}
+            **Time:** ${{ github.event.head_commit.timestamp }}
+            Please check the [workflow logs](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.`;
+            
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `VertexAI Analytics Pipeline Failed - Run ${{ github.run_id }}`,
+              body: issue_body,
+              labels: ['pipeline-failure', 'urgent']
+            });
