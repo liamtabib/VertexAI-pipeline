@@ -28,7 +28,8 @@ def trigger_cloud_run_job(project, region, job_name, run_id=None):
     """Trigger Cloud Run Job with retry logic and error handling"""
     import time
     
-    url = f"https://{region}-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/{project}/jobs/{job_name}:run"
+    # Use modern Cloud Run Jobs API endpoint
+    url = f"https://run.googleapis.com/v1/projects/{project}/locations/{region}/jobs/{job_name}:run"
     body = {}
     if run_id:
         body = {"overrides":{"containerOverrides":[{"name":"container-0","env":[{"name":"RUN_ID","value":run_id}]}]}}
@@ -180,7 +181,7 @@ def evidence_dashboard(context: AssetExecutionContext, export_to_duckdb: str) ->
 
 
 @asset(
-    description="Generate AI summary using Cloud Run Job (optional in CI)",
+    description="Generate AI summary using Cloud Run Job",
     deps=[export_to_duckdb],
     group_name="summary"
 )
@@ -253,13 +254,12 @@ def gemini_summary(context: AssetExecutionContext) -> str:
         raise Exception(f"Cloud Run Job did not complete within {max_wait}s - check Cloud Console for details")
         
     except Exception as e:
-        context.log.warning(f"Cloud Run Job failed (continuing without AI): {str(e)}")
-        # Return mock run_id to allow pipeline to continue
-        return time.strftime("%Y-%m-%d")
+        context.log.error(f"Failed to trigger Cloud Run Job: {str(e)}")
+        raise
 
 
 @asset(
-    description="Sync AI summary from BigQuery to DuckDB (optional)",
+    description="Sync AI summary from BigQuery to DuckDB",
     deps=[gemini_summary],
     group_name="summary"
 )
@@ -277,10 +277,8 @@ def sync_summary(context: AssetExecutionContext, gemini_summary: str) -> str:
         return str(duckdb_path)
         
     except Exception as e:
-        context.log.warning(f"Failed to sync summary to DuckDB (continuing without AI summary): {str(e)}")
-        # Return the DuckDB path so the dashboard can still build
-        duckdb_path = Path(__file__).parent.parent.parent / "dashboard" / "sources" / "dashboard_data" / "dashboard_data.duckdb"
-        return str(duckdb_path)
+        context.log.error(f"Failed to sync summary to DuckDB: {str(e)}")
+        raise
 
 
 # Define the main pipeline job
