@@ -28,8 +28,8 @@ def trigger_cloud_run_job(project, region, job_name, run_id=None):
     """Trigger Cloud Run Job with retry logic and error handling"""
     import time
     
-    # Use modern Cloud Run Jobs API endpoint
-    url = f"https://run.googleapis.com/v1/projects/{project}/locations/{region}/jobs/{job_name}:run"
+    # Use Cloud Run Jobs API v2 endpoint
+    url = f"https://run.googleapis.com/v2/projects/{project}/locations/{region}/jobs/{job_name}:run"
     body = {}
     if run_id:
         # Override the first (unnamed) container's environment
