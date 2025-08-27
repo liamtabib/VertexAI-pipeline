@@ -73,9 +73,6 @@ def main():
     logger.info(f"Connecting to DuckDB at {duckdb_path}")
     duckdb_conn = duckdb.connect(str(duckdb_path))
     
-    # Disable WAL mode to prevent .wal file creation that can cause Evidence build issues
-    duckdb_conn.execute("PRAGMA journal_mode = DELETE")
-    
     try:
         # Export each table
         for table in tables:
@@ -92,7 +89,13 @@ def main():
             logger.info(f"  {table_name}: {count:,} rows")
             
     finally:
+        # Ensure all transactions are committed and connection is properly closed
+        duckdb_conn.commit()
         duckdb_conn.close()
+        
+        # Brief delay to allow file system to stabilize before Evidence build
+        import time
+        time.sleep(1)
 
 
 if __name__ == "__main__":
