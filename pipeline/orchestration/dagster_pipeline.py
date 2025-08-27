@@ -152,10 +152,10 @@ def export_to_duckdb(context: AssetExecutionContext) -> str:
 
 @asset(
     description="Build Evidence dashboard",
-    deps=[export_to_duckdb],
+    deps=[export_to_duckdb, sync_summary],
     group_name="dashboard"
 )
-def evidence_dashboard(context: AssetExecutionContext, export_to_duckdb: str) -> str:
+def evidence_dashboard(context: AssetExecutionContext, export_to_duckdb: str, sync_summary: str) -> str:
     """Build Evidence dashboard with fresh data"""
     try:
         dashboard_dir = Path(__file__).parent.parent.parent / "dashboard"
@@ -175,7 +175,7 @@ def evidence_dashboard(context: AssetExecutionContext, export_to_duckdb: str) ->
         if result.stderr:
             context.log.warning(f"Evidence build warnings: {result.stderr}")
         
-        context.log.info(f"Evidence dashboard built successfully using data from {export_to_duckdb}")
+        context.log.info(f"Evidence dashboard built successfully using data from {export_to_duckdb} and fresh summary from {sync_summary}")
         return "dashboard_built"
         
     except subprocess.CalledProcessError as e:
