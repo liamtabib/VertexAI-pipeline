@@ -73,6 +73,9 @@ def main():
     logger.info(f"Connecting to DuckDB at {duckdb_path}")
     duckdb_conn = duckdb.connect(str(duckdb_path))
     
+    # Disable WAL mode to prevent .wal file creation that can cause Evidence build issues
+    duckdb_conn.execute("PRAGMA journal_mode = DELETE")
+    
     try:
         # Export each table
         for table in tables:
