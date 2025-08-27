@@ -108,8 +108,14 @@ def call_gemini(payload, prompt_path="prompt.txt"):
         model = GenerativeModel(MODEL_ID)
         cfg = GenerationConfig(temperature=0.2, max_output_tokens=600)
         
-        # Load prompt template
-        prompt = open(prompt_path, "r", encoding="utf-8").read()
+        # Load prompt template - check environment variable first (from pipeline), fallback to file
+        prompt_content = os.environ.get("PROMPT_CONTENT")
+        if prompt_content:
+            prompt = prompt_content
+            logger.info("Using prompt content provided by pipeline")
+        else:
+            prompt = open(prompt_path, "r", encoding="utf-8").read()
+            logger.info(f"Using prompt from local file: {prompt_path}")
         
         # Combine prompt with JSON data as text
         full_prompt = f"{prompt}\n\nData:\n{json.dumps(payload, indent=2)}"

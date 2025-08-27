@@ -30,10 +30,17 @@ def trigger_cloud_run_job(project, region, job_name, run_id=None):
     
     # Use Cloud Run Jobs API v2 endpoint
     url = f"https://run.googleapis.com/v2/projects/{project}/locations/{region}/jobs/{job_name}:run"
-    body = {}
+    
+    # Read prompt content from repository to ensure latest version is used
+    prompt_path = Path(__file__).parent.parent / "gemini_summarizer" / "prompt.txt"
+    prompt_content = prompt_path.read_text(encoding="utf-8")
+    
+    # Prepare environment variables for container
+    env_vars = [{"name": "PROMPT_CONTENT", "value": prompt_content}]
     if run_id:
-        # Override the first (unnamed) container's environment
-        body = {"overrides":{"containerOverrides":[{"env":[{"name":"RUN_ID","value":run_id}]}]}}
+        env_vars.append({"name": "RUN_ID", "value": run_id})
+    
+    body = {"overrides": {"containerOverrides": [{"env": env_vars}]}} if env_vars else {}
     
     max_retries = 3
     for attempt in range(max_retries):
