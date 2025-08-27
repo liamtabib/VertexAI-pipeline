@@ -151,44 +151,6 @@ def export_to_duckdb(context: AssetExecutionContext) -> str:
 
 
 @asset(
-    description="Build Evidence dashboard",
-    deps=[export_to_duckdb, sync_summary],
-    group_name="dashboard"
-)
-def evidence_dashboard(context: AssetExecutionContext, export_to_duckdb: str, sync_summary: str) -> str:
-    """Build Evidence dashboard with fresh data"""
-    try:
-        dashboard_dir = Path(__file__).parent.parent.parent / "dashboard"
-        
-        context.log.info("Building Evidence dashboard...")
-        result = subprocess.run(
-            ["npm", "run", "build"],
-            cwd=dashboard_dir,
-            capture_output=True,
-            text=True,
-            check=True
-        )
-        
-        context.log.info("Evidence build output:")
-        context.log.info(result.stdout)
-        
-        if result.stderr:
-            context.log.warning(f"Evidence build warnings: {result.stderr}")
-        
-        context.log.info(f"Evidence dashboard built successfully using data from {export_to_duckdb} and fresh summary from {sync_summary}")
-        return "dashboard_built"
-        
-    except subprocess.CalledProcessError as e:
-        context.log.error(f"Evidence build failed with exit code {e.returncode}")
-        context.log.error(f"stdout: {e.stdout}")
-        context.log.error(f"stderr: {e.stderr}")
-        raise
-    except Exception as e:
-        context.log.error(f"Failed to build Evidence dashboard: {str(e)}")
-        raise
-
-
-@asset(
     description="Generate AI summary using Cloud Run Job",
     deps=[export_to_duckdb],
     group_name="summary"
@@ -286,6 +248,44 @@ def sync_summary(context: AssetExecutionContext, gemini_summary: str) -> str:
         
     except Exception as e:
         context.log.error(f"Failed to sync summary to DuckDB: {str(e)}")
+        raise
+
+
+@asset(
+    description="Build Evidence dashboard",
+    deps=[export_to_duckdb, sync_summary],
+    group_name="dashboard"
+)
+def evidence_dashboard(context: AssetExecutionContext, export_to_duckdb: str, sync_summary: str) -> str:
+    """Build Evidence dashboard with fresh data"""
+    try:
+        dashboard_dir = Path(__file__).parent.parent.parent / "dashboard"
+        
+        context.log.info("Building Evidence dashboard...")
+        result = subprocess.run(
+            ["npm", "run", "build"],
+            cwd=dashboard_dir,
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        
+        context.log.info("Evidence build output:")
+        context.log.info(result.stdout)
+        
+        if result.stderr:
+            context.log.warning(f"Evidence build warnings: {result.stderr}")
+        
+        context.log.info(f"Evidence dashboard built successfully using data from {export_to_duckdb} and fresh summary from {sync_summary}")
+        return "dashboard_built"
+        
+    except subprocess.CalledProcessError as e:
+        context.log.error(f"Evidence build failed with exit code {e.returncode}")
+        context.log.error(f"stdout: {e.stdout}")
+        context.log.error(f"stderr: {e.stderr}")
+        raise
+    except Exception as e:
+        context.log.error(f"Failed to build Evidence dashboard: {str(e)}")
         raise
 
 
