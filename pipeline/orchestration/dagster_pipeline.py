@@ -86,7 +86,8 @@ def sync_summary_to_duckdb(project, dataset, duckdb_path, run_id=None):
             con.execute("""CREATE TABLE IF NOT EXISTS summaries(
                 run_id VARCHAR, run_ts TIMESTAMP, data_end_date DATE, text TEXT, facts_json JSON,
                 sent_slack_ts VARCHAR, sent_email_id VARCHAR)""")
-            con.execute("DELETE FROM summaries WHERE run_id = ?", [r["run_id"]])
+            # Clear all summaries and insert only the latest one for dashboard consistency
+            con.execute("DELETE FROM summaries")
             con.execute("INSERT INTO summaries VALUES (?,?,?,?,?,?,?)",
                         [r["run_id"], r["run_ts"], r["data_end_date"], r["text"], r["facts_json"],
                          r["sent_slack_ts"], r["sent_email_id"]])
