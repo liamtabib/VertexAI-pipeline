@@ -7,9 +7,6 @@ This project is an end-to-end analytics pipeline for ecommerce data with AI-powe
 ## High level architecture
 ![High level architecture](./docs/architecture.png)
 
-## Vertex-AI Data Slackbot
-![Slackbot demo](./docs/demo_slackbot.png)
-
 ## Project Structure
 
 ```

@@ -1,0 +1,64 @@
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+**/__pycache__/
+*.py[cod]
+**/*.py[cod]
+*$py.class
+**/*$py.class
+*.pyc
+.pytest_cache
+.ruff_cache
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+*creds*.json
+*key*.json
+*service-account*.json
+!place_ids.json
+!package.json
+!package-lock.json
+
+*.wal
+
+# dbt
+transform/maps_metrics/target/
+transform/maps_metrics/dbt_packages/
+transform/maps_metrics/logs/
+target/
+dbt_packages/
+logs/
+
+# Dagster
+.dagster/
+.dagster_home/
+
+**/.ddb
+**/node_modules
+**/.evidence
+**/connection.options.yaml
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+dashboard/build/
