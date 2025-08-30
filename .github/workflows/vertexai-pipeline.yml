@@ -1,4 +1,4 @@
-name: VertexAI Ecommerce Analytics Pipeline
+name: Dagster Pipeline
 
 permissions:
   id-token: write
