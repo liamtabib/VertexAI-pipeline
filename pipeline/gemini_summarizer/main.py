@@ -87,7 +87,7 @@ def fetch_payload():
             logger.info(f"Query {key} returned {len(result)} rows")
         
         payload = {"run_ts": time.strftime("%Y-%m-%dT%H:%M:%SZ"), "sections": {}}
-        payload["data_end_date"] = str(data["data_end_date"][0]["data_end_date"])
+        payload["data_end_date"] = time.strftime("%Y-%m-%d")
         
         for k in ["mau","retention","platform","funnel","kpi_metrics"]:
             payload["sections"][k] = _norm(data[k])
