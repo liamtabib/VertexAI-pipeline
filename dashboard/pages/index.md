@@ -188,10 +188,10 @@ SELECT * FROM kpi_metrics
 
 {#if latest_summary.length > 0}
 <div class="bg-blue-30 border border-blue-220 rounded-lg p-2 mb-3">
-  <h3 class="text-lg font-medium text-blue-90 mb-2">Dashboard AI Highlights</h3>
+  <h3 class="text-lg font-medium text-blue-90 mb-2">AI Highlights:</h3>
   <div class="text-blue-800 summary-content">{@html latest_summary[0].text}</div>
  
 </div>
 {/if}
 
-This dashboard is powered by [Google Cloud](https://cloud.google.com/), [Vertex AI](https://cloud.google.com/vertex-ai), and [Evidence](https://evidence.dev/). You can find the code for this dashboard on [GitHub](https://github.com/mehd-io/pypi-duck-flow). *Made by [Liam](https://www.linkedin.com/in/liamtabibzadeh/)*.
+This dashboard and the LLM summarization is powered by [Google Cloud](https://cloud.google.com/), [Vertex AI](https://cloud.google.com/vertex-ai), and [Evidence](https://evidence.dev/). You can find the code on [GitHub](https://github.com/liamtabib/VertexAI-pipeline). *Made by [Liam](https://www.linkedin.com/in/liamtabibzadeh/)*.

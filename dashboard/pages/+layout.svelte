@@ -5,6 +5,6 @@
 	export let data;
 </script>
 
-<EvidenceDefaultLayout {data}>
+<EvidenceDefaultLayout {data} neverShowQueries={true}>
 	<slot slot="content" />
 </EvidenceDefaultLayout>
