@@ -35,7 +35,7 @@ purchase_conversion_last_30_days AS (
 
 SELECT
   -- Date last updated
-  FORMAT_DATE('%Y-%m-%d', last_data_date.last_updated) AS last_updated_date,
+  FORMAT_DATE('%Y-%m-%d', CURRENT_DATE()) AS last_updated_date,
   
   -- MAU last 30 days
   mau_last_30_days.mau_30_days,
