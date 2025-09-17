@@ -1,5 +1,5 @@
-# SummaryAI: ecommerce analytics with AI insights
-This project is a collections of pipelines and AI summarisation for product data. It serves educational purpose to learn how to build data pipelines with **Dagster** and **Vertex AI**. You can see the final result of the project in this live [dashboard](https://your-dashboard-url.com/).
+# Data Pipeline using Google Cloud
+This project is an end-to-end data pipeline that visualizes product data with an AI summary. It served as a way to learn to build data pipelines with **Dagster** and **Vertex AI**. You can see the final result of the project in this live [dashboard](https://productdashboard.app/).
 
 ![demo](./docs/demo_dashboard.gif)
 
