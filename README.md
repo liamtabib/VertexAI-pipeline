@@ -1,6 +1,5 @@
 # SummaryAI: ecommerce analytics with AI insights
-
-This project is an end-to-end analytics pipeline for ecommerce data with AI-powered insights and conversational analytics. It also serves as educational purpose to learn how to build data pipelines with **Python**, **Dagster**, **dbt**, **Vertex AI**, and **GCP**. You can see the final result of the project in this live [dashboard](https://your-dashboard-url.com/).
+This project is a collections of pipelines and AI summarisation for product data. It serves educational purpose to learn how to build data pipelines with **Dagster** and **Vertex AI**. You can see the final result of the project in this live [dashboard](https://your-dashboard-url.com/).
 
 ![demo](./docs/demo_dashboard.gif)
 

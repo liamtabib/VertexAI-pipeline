@@ -13,7 +13,7 @@ on:
         default: false
         type: boolean
   schedule:
-    - cron: '0 6 * * 1'  # Weekly on Mondays at 6 AM UTC
+    - cron: '0 22 1 * *'  # Monthly at 10 PM UTC on the 1st
 
 jobs:
   run-analytics-pipeline:
