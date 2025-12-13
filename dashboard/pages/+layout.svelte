@@ -5,6 +5,11 @@
 	export let data;
 </script>
 
+<svelte:head>
+	<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+	<link rel="apple-touch-icon" href="/favicon.svg" />
+</svelte:head>
+
 <EvidenceDefaultLayout {data} neverShowQueries={true}>
 	<slot slot="content" />
 </EvidenceDefaultLayout>

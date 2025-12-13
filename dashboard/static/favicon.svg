@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Option 3: Pipeline Flow - DAG-style branching nodes -->
+  <rect width="32" height="32" fill="#1e293b" rx="6"/>
+  
+  <!-- Connection lines -->
+  <path d="M7 16 L13 16" stroke="#5eead4" stroke-width="2" stroke-linecap="round"/>
+  <path d="M13 16 L19 10" stroke="#5eead4" stroke-width="2" stroke-linecap="round"/>
+  <path d="M13 16 L19 22" stroke="#5eead4" stroke-width="2" stroke-linecap="round"/>
+  <path d="M19 10 L25 10" stroke="#5eead4" stroke-width="2" stroke-linecap="round"/>
+  <path d="M19 22 L25 22" stroke="#5eead4" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Nodes -->
+  <rect x="4" y="13" width="6" height="6" rx="1.5" fill="#5eead4"/>
+  <rect x="16" y="7" width="6" height="6" rx="1.5" fill="#5eead4"/>
+  <rect x="16" y="19" width="6" height="6" rx="1.5" fill="#5eead4"/>
+  <rect x="22" y="7" width="6" height="6" rx="1.5" fill="#f472b6"/>
+  <rect x="22" y="19" width="6" height="6" rx="1.5" fill="#f472b6"/>
+</svg>
